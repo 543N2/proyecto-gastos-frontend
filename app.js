@@ -60,12 +60,8 @@ clearButton.addEventListener("click", clearForm)
 //#endregion
 
 //#region functions
-async function loadData() {
-    sendReadRequest().then(res => {
-        data = res
-        printTable(data)
-        clearData()
-    })
+function loadData() {
+    sendReadRequest()
 }
 
 function readForm() {
@@ -202,7 +198,8 @@ function sendReadRequest(expense) {
         dataType: 'json',
         success: function (response) {
             console.log(response)
-            return response
+            printData(response)
+            clearData()
         },
         error: function (error) {
             console.log(error)
