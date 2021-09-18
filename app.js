@@ -60,10 +60,12 @@ clearButton.addEventListener("click", clearForm)
 //#endregion
 
 //#region functions
-function loadData(){
-    data = sendReadRequest()
-    printTable(data)
-    clearData()
+async function loadData() {
+    sendReadRequest().then(res => {
+        data = res
+        printTable(data)
+        clearData()
+    })
 }
 
 function readForm() {
@@ -81,7 +83,7 @@ function readForm() {
     return expense
 }
 
-function clearData(){
+function clearData() {
     data = []
 }
 
@@ -153,97 +155,93 @@ function editExpense(e) {
 
 function deleteExpense(e) {
     readTableRow(e)
-    sendDeleteRequest(data[0])
+    sendDeleteRequest(data[0]).then(() => {
+        loadData()
+    })
 }
 
 function saveExpense() {
     let expense = readForm()
-    if(expense.id == null){
-        sendCreateRequest(expense)
+    if (expense.id == null) {
+        sendCreateRequest(expense).then(() => {
+            clearForm()
+            loadData()
+        })
     }
     else {
-        sendUpdateRequest(expense)
+        sendUpdateRequest(expense).then(() => {
+            clearForm()
+            loadData()
+        })
     }
-    clearForm()
-    loadData()
 }
 
 
 // Server Requests
-function sendCreateRequest (expense){
+function sendCreateRequest(expense) {
     $.ajax({
-            url : server + endpoint,
-            data : expense, 
-            method : 'post',
-            dataType : 'json',
-            success : function(response){
-                   console.log(response)
-                   loadData()
-            },
-            error: function(error){
-                   console.log(error)
-                   console.log(expense)
-                   loadData()
-            }
-    });
-}
-
-function sendReadRequest (expense){
-    $.ajax({
-            url : server + endpoint,
-            data : expense, 
-            method : 'get',
-            dataType : 'json',
-            success : function(response){
-                   console.log(response)
-                   data = response
-                   loadData()
-            },
-            error: function(error){
-                   console.log(error)
-                   console.log(expense)
-                   loadData()
-            }
-    });
-}
-
-function sendUpdateRequest(expense){
-    $.ajax({
-        url : server + endpoint,
-        data : expense, 
-        method : 'post',
-        dataType : 'json',
-        success : function(response){
-               console.log(response)
-               data = response
-               loadData()
+        url: server + endpoint,
+        data: expense,
+        method: 'post',
+        dataType: 'json',
+        success: function (response) {
+            console.log(response)
         },
-        error: function(error){
-               console.log(error)
-               console.log(expense)
-               loadData()
+        error: function (error) {
+            console.log(error)
+            console.log(expense)
         }
-});
+    });
 }
 
-function sendDeleteRequest(expense){
+function sendReadRequest(expense) {
+    $.ajax({
+        url: server + endpoint,
+        data: expense,
+        method: 'get',
+        dataType: 'json',
+        success: function (response) {
+            console.log(response)
+            return response
+        },
+        error: function (error) {
+            console.log(error)
+            console.log(expense)
+        }
+    });
+}
+
+function sendUpdateRequest(expense) {
+    $.ajax({
+        url: server + endpoint,
+        data: expense,
+        method: 'post',
+        dataType: 'json',
+        success: function (response) {
+            console.log(response)
+        },
+        error: function (error) {
+            console.log(error)
+            console.log(expense)
+        }
+    });
+}
+
+function sendDeleteRequest(expense) {
     let id = `/${expense.id}`
     $.ajax({
-        url : server + endpoint + id,
-        data : expense, 
-        method : 'post',
-        dataType : 'json',
-        success : function(response){
-               console.log(response)
-               data = response
-               loadData()
+        url: server + endpoint + id,
+        data: expense,
+        method: 'post',
+        dataType: 'json',
+        success: function (response) {
+            console.log(response)
         },
-        error: function(error){
-               console.log(error)
-               console.log(expense)
-               loadData()
+        error: function (error) {
+            console.log(error)
+            console.log(expense)
         }
-});
+    });
 }
 
 // Local requests functions
