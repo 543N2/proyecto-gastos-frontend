@@ -150,9 +150,9 @@ function editExpense(e) {
 }
 
 function deleteExpense(e) {
-    // readTableRow(e)
+    readTableRow(e)
     sendDeleteRequest(data[0])
-    // sendReadRequest()
+    sendReadRequest()
 }
 
 function saveExpense() {
@@ -233,7 +233,6 @@ function sendDeleteRequest(expense) {
         method: 'DELETE',
         success: function (response) {
             console.log(response)
-            readTableRow(e)
             loadData()        
             clearForm()
         },
