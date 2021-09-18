@@ -173,9 +173,13 @@ function saveExpense() {
 // Server Requests
 function sendCreateRequest(expense) {
     $.ajax({
+        headers: { 
+            'Accept': 'application/json',
+            'Content-Type': 'application/json' 
+        },
         url: server + endpoint,
-        data: expense,
-        method: 'post',
+        data: JSON.stringify(expense),
+        method: 'POST',
         dataType: 'json',
         success: function (response) {
             console.log(response)
