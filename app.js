@@ -136,8 +136,8 @@ function readTableRow(e) {
         id: parseInt(expenseItems[0].innerHTML),
         producto: expenseItems[1].innerHTML,
         fecha: expenseItems[2].innerHTML,
-        precio: parseInt(expenseItems[3].innerHTML),
-        descripcion: expenseItems[4].innerHTML
+        descripcion: expenseItems[3].innerHTML,
+        precio: parseInt(expenseItems[4].innerHTML)
     }
     data.push(expense)
 }
