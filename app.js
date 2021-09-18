@@ -161,10 +161,7 @@ function saveExpense() {
         sendCreateRequest(expense)
     }
     else {
-        sendUpdateRequest(expense).then(() => {
-            clearForm()
-            loadData()
-        })
+        sendUpdateRequest(expense)
     }
 }
 
@@ -214,10 +211,12 @@ function sendUpdateRequest(expense) {
     $.ajax({
         url: server + endpoint,
         data: expense,
-        method: 'post',
+        method: 'POST',
         dataType: 'json',
         success: function (response) {
             console.log(response)
+            loadData()
+            clearForm()
         },
         error: function (error) {
             console.log(error)
