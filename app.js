@@ -239,7 +239,7 @@ function sendDeleteRequest(expense) {
         success: function (response) {
             console.log(response)
             clearForm()
-            loadData()
+            sendReadRequest()
         },
         error: function (error) {
             console.log(error)
