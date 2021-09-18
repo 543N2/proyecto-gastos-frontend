@@ -209,8 +209,12 @@ function sendReadRequest(expense) {
 
 function sendUpdateRequest(expense) {
     $.ajax({
+        headers: { 
+            'Accept': 'application/json',
+            'Content-Type': 'application/json' 
+        },
         url: server + endpoint,
-        data: expense,
+        data: JSON.stringify(expense),
         method: 'POST',
         dataType: 'json',
         success: function (response) {
