@@ -159,10 +159,7 @@ function deleteExpense(e) {
 function saveExpense() {
     let expense = readForm()
     if (expense.id == null) {
-        sendCreateRequest(expense).then(() => {
-            clearForm()
-            loadData()
-        })
+        sendCreateRequest(expense)
     }
     else {
         sendUpdateRequest(expense).then(() => {
@@ -182,6 +179,8 @@ function sendCreateRequest(expense) {
         dataType: 'json',
         success: function (response) {
             console.log(response)
+            clearForm()
+            loadData()
         },
         error: function (error) {
             console.log(error)
@@ -198,7 +197,7 @@ function sendReadRequest(expense) {
         dataType: 'json',
         success: function (response) {
             console.log(response)
-            printData(response)
+            printTable(response)
             clearData()
         },
         error: function (error) {
