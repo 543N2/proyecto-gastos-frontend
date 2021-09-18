@@ -229,14 +229,8 @@ function sendUpdateRequest(expense) {
 function sendDeleteRequest(expense) {
     let id = `/${expense.id}`
     $.ajax({
-        headers: { 
-            'Accept': 'application/json',
-            'Content-Type': 'application/json' 
-        },
         url: server + endpoint + id,
-        data: JSON.stringify(expense),
         method: 'DELETE',
-        dataType: 'json',
         success: function (response) {
             console.log(response)
             readTableRow(e)
